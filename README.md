@@ -26,8 +26,8 @@ If you want to spin this up locally and feel it for yourself:
 
 ```bash
 # 1. Clone the repository
-git clone https://github.com/yourusername/wall-calendar.git
-cd wall-calendar
+git clone https://github.com/Ruthwik000/Interactive-Calendar-_os.git
+cd Interactive-Calendar-_os
 
 # 2. Install dependencies
 npm install
