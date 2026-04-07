@@ -1,0 +1,993 @@
+/* ═══════════════════════════════════════════════════════
+   Calendar — Premium Editorial CSS Module
+   Warm aesthetic • Micro-interactions • Refined details
+   ═══════════════════════════════════════════════════════ */
+
+/* ─── Page ─── */
+.page {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0 20px 60px;
+}
+
+/* ─── Top Bar ─── */
+.topBar {
+  width: 100%;
+  max-width: 840px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 24px 0;
+  margin-bottom: 4px;
+}
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--text-primary);
+  transition: transform var(--duration-fast) var(--ease-out);
+}
+.brand:hover { transform: translateX(2px); }
+.brandName {
+  font-family: var(--font-display);
+  font-size: 1.4rem;
+  font-weight: 400;
+  letter-spacing: 0.01em;
+  color: var(--text-primary);
+}
+.topActions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.todayBtn {
+  position: relative;
+  padding: 8px 20px;
+  border-radius: 6px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--primary);
+  border: 1.5px solid var(--primary);
+  background: transparent;
+  overflow: hidden;
+  transition: all var(--duration-normal) var(--ease-out);
+}
+.todayBtn::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--primary);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.35s var(--ease-out);
+  z-index: 0;
+}
+.todayBtn:hover { color: var(--text-inverse); border-color: var(--primary); }
+.todayBtn:hover::before { transform: scaleX(1); }
+.todayBtn span { position: relative; z-index: 1; }
+.todayBtn:active { transform: scale(0.96); }
+.themeBtn {
+  width: 38px;
+  height: 38px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-muted);
+  border: 1.5px solid var(--border);
+  background: var(--surface);
+  transition: all var(--duration-normal) var(--ease-out);
+}
+.themeBtn:hover {
+  border-color: var(--primary);
+  color: var(--primary);
+  transform: rotate(12deg);
+  box-shadow: var(--shadow-sm);
+}
+.themeBtn:active {
+  transform: scale(0.88) rotate(-8deg);
+  transition-duration: 80ms;
+}
+
+/* ─── Calendar Container ─── */
+.calendarOuter {
+  width: 100%;
+  max-width: 840px;
+  perspective: 1400px;
+}
+.calendar {
+  position: relative;
+  background: var(--surface);
+  border-radius: 3px 3px 16px 16px;
+  box-shadow: var(--shadow-calendar);
+  overflow: visible;
+  transform-style: preserve-3d;
+  transition: box-shadow var(--duration-slow) var(--ease-out);
+}
+.calendar:hover {
+  box-shadow: 0 28px 70px -12px rgba(44, 37, 32, 0.16),
+              0 0 0 1px rgba(44, 37, 32, 0.05);
+}
+.calendarInner {
+  transform-origin: top center;
+}
+
+/* ─── 3-D Page Flip ─── */
+.flipOut {
+  animation: flipOut 320ms var(--ease-in-out) forwards;
+}
+.flipOutReverse {
+  animation: flipOutReverse 320ms var(--ease-in-out) forwards;
+}
+.flipIn {
+  animation: flipIn 380ms var(--ease-out) forwards;
+}
+.flipInReverse {
+  animation: flipInReverse 380ms var(--ease-out) forwards;
+}
+
+@keyframes flipOut {
+  from { transform: perspective(1200px) rotateX(0); opacity: 1; }
+  to   { transform: perspective(1200px) rotateX(-90deg); opacity: 0; }
+}
+@keyframes flipOutReverse {
+  from { transform: perspective(1200px) rotateX(0); opacity: 1; }
+  to   { transform: perspective(1200px) rotateX(90deg); opacity: 0; }
+}
+@keyframes flipIn {
+  from { transform: perspective(1200px) rotateX(90deg); opacity: 0; }
+  to   { transform: perspective(1200px) rotateX(0); opacity: 1; }
+}
+@keyframes flipInReverse {
+  from { transform: perspective(1200px) rotateX(-90deg); opacity: 0; }
+  to   { transform: perspective(1200px) rotateX(0); opacity: 1; }
+}
+
+/* ─── Spiral Binding ─── */
+.spiralRow {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  gap: 28px;
+  padding: 0 48px;
+  height: 26px;
+  z-index: 10;
+  background: var(--surface);
+  border-radius: 3px 3px 0 0;
+}
+.spiral {
+  position: relative;
+  width: 20px;
+  height: 26px;
+}
+.spiral::before {
+  content: '';
+  position: absolute;
+  top: -7px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 16px;
+  height: 30px;
+  border: 2px solid #8C8178;
+  border-radius: 50%;
+  background: var(--bg);
+  z-index: 1;
+  transition: border-color var(--duration-fast);
+}
+.spiralRow:hover .spiral::before {
+  border-color: #6B5E54;
+}
+.spiralInner {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 10px;
+  height: 13px;
+  border-bottom: 2px solid #9C9488;
+  border-left: 2px solid #9C9488;
+  border-right: 2px solid #9C9488;
+  border-radius: 0 0 5px 5px;
+  z-index: 2;
+}
+
+/* ─── Hero Image ─── */
+.hero {
+  position: relative;
+  width: 100%;
+  height: 380px;
+  overflow: hidden;
+}
+.heroImg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 1.2s var(--ease-out);
+  will-change: transform;
+}
+.hero:hover .heroImg {
+  transform: scale(1.03);
+}
+.heroGradient {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    transparent 40%,
+    rgba(44, 37, 32, 0.08) 70%,
+    rgba(44, 37, 32, 0.18) 100%
+  );
+  pointer-events: none;
+}
+.accentTriangle {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 100%;
+  height: 50%;
+  background: var(--primary);
+  clip-path: polygon(50% 100%, 100% 20%, 100% 100%);
+  z-index: 2;
+  transition: background var(--duration-slow) var(--ease-out);
+}
+.whiteTriangle {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 45%;
+  height: 36%;
+  background: var(--surface);
+  clip-path: polygon(0% 45%, 55% 100%, 0% 100%);
+  z-index: 3;
+}
+.heroText {
+  position: absolute;
+  bottom: 24px;
+  right: 32px;
+  text-align: right;
+  z-index: 4;
+  color: var(--text-inverse);
+}
+.heroYear {
+  display: block;
+  font-family: var(--font-sans);
+  font-size: 0.95rem;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  opacity: 0.85;
+  margin-bottom: 2px;
+}
+.heroMonth {
+  font-family: var(--font-display);
+  font-size: 2.8rem;
+  font-weight: 400;
+  letter-spacing: 0.04em;
+  line-height: 1;
+  text-shadow: 0 2px 12px rgba(44, 37, 32, 0.25);
+}
+
+/* ─── Body (Notes + Grid) ─── */
+.body {
+  display: flex;
+  gap: 0;
+  padding: 28px 32px 16px;
+}
+
+/* ─── Desktop Notes Wrapper ─── */
+.desktopNotes {
+  flex: 0 0 200px;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ─── Notes Column ─── */
+.notesCol {
+  display: flex;
+  flex-direction: column;
+  padding-right: 28px;
+  border-right: 1px solid var(--divider);
+}
+.notesLabel {
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: 14px;
+}
+.notesArea {
+  flex: 1;
+}
+.notesInput {
+  width: 100%;
+  border: none;
+  outline: none;
+  background-color: transparent;
+  color: var(--text-primary);
+  font-size: 0.85rem;
+  font-weight: 400;
+  line-height: 1.9;
+  resize: none;
+  background-image: repeating-linear-gradient(
+    transparent,
+    transparent 27px,
+    var(--divider) 27px,
+    var(--divider) 28px
+  );
+  background-position: 0 3px;
+  padding: 0;
+  caret-color: var(--primary);
+  transition: color var(--duration-fast);
+}
+.notesInput::placeholder {
+  color: var(--text-muted);
+  font-style: italic;
+  font-weight: 300;
+}
+
+/* Range Card */
+.rangeCard {
+  margin-top: 18px;
+  padding: 14px;
+  background: var(--primary-light);
+  border-radius: 12px;
+  border: 1px solid var(--primary-medium);
+  animation: slideInUp 350ms var(--ease-spring);
+}
+@keyframes slideInUp {
+  from { opacity: 0; transform: translateY(12px) scale(0.97); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+.rangeHeader {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.rangeDot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--primary);
+  flex-shrink: 0;
+  animation: dotPulse 2s ease infinite;
+}
+@keyframes dotPulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.2); opacity: 0.7; }
+}
+.rangeTitle {
+  flex: 1;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  letter-spacing: 0.01em;
+}
+.rangeClear {
+  width: 24px;
+  height: 24px;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+  color: var(--text-muted);
+  transition: all var(--duration-fast) var(--ease-out);
+}
+.rangeClear:hover {
+  background: var(--primary);
+  color: white;
+  transform: rotate(90deg);
+}
+.rangeDays {
+  display: block;
+  font-size: 0.7rem;
+  color: var(--primary);
+  font-weight: 600;
+  margin: 4px 0 10px 16px;
+  letter-spacing: 0.02em;
+}
+.rangeNoteInput {
+  width: 100%;
+  border: 1.5px solid var(--border);
+  border-radius: 8px;
+  padding: 10px 12px;
+  font-size: 0.82rem;
+  background: var(--surface);
+  color: var(--text-primary);
+  outline: none;
+  resize: none;
+  transition: border-color var(--duration-normal) var(--ease-out),
+              box-shadow var(--duration-normal) var(--ease-out);
+  caret-color: var(--primary);
+}
+.rangeNoteInput:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px var(--primary-light);
+}
+.rangeSaveBtn {
+  width: 100%;
+  margin-top: 10px;
+  padding: 9px 0;
+  border-radius: 8px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text-inverse);
+  background: var(--primary);
+  border: none;
+  cursor: pointer;
+  transition: all var(--duration-normal) var(--ease-out);
+  position: relative;
+  overflow: hidden;
+}
+.rangeSaveBtn::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(rgba(255,255,255,0.1), transparent);
+  opacity: 0;
+  transition: opacity var(--duration-fast);
+}
+.rangeSaveBtn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 16px var(--primary-medium);
+}
+.rangeSaveBtn:hover::after { opacity: 1; }
+.rangeSaveBtn:active {
+  transform: translateY(0) scale(0.97);
+  transition-duration: 80ms;
+}
+.rangeSaved {
+  background: var(--accent-green) !important;
+  pointer-events: none;
+}
+
+/* ─── Grid Column ─── */
+.gridCol {
+  flex: 1;
+  min-width: 0;
+}
+.weekHeaders {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  margin-bottom: 6px;
+  padding-bottom: 10px;
+  border-bottom: 1.5px solid var(--divider);
+}
+.weekDay {
+  text-align: center;
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  color: var(--text-muted);
+  padding: 4px 0;
+  text-transform: uppercase;
+}
+.weekDayEnd {
+  color: var(--primary);
+}
+
+/* ─── Date Grid ─── */
+.dateGrid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+}
+.cell {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 48px;
+  padding: 4px 0;
+  cursor: pointer;
+  transition: background var(--duration-fast) var(--ease-out);
+  border-radius: 0;
+}
+.cellNum {
+  position: relative;
+  z-index: 2;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  font-size: 0.88rem;
+  font-weight: 500;
+  color: var(--text-primary);
+  transition: all 180ms var(--ease-out);
+}
+.cell:hover .cellNum {
+  background: var(--primary-light);
+  transform: scale(1.1);
+  box-shadow: 0 0 0 4px var(--primary-light);
+}
+
+/* Other month */
+.otherMonth {
+  cursor: pointer;
+  opacity: 0.25;
+}
+.otherMonth .cellNum {
+  font-weight: 400;
+  color: var(--text-muted);
+}
+.otherMonth:hover .cellNum {
+  background: transparent;
+  transform: none;
+  box-shadow: none;
+}
+
+/* Weekend */
+.weekend .cellNum {
+  color: var(--primary);
+  font-weight: 600;
+}
+
+/* Today */
+.today .cellNum {
+  font-weight: 700;
+  color: var(--primary);
+}
+.todayDot {
+  position: absolute;
+  bottom: 4px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--primary);
+  z-index: 3;
+  animation: breathe 2.5s ease-in-out infinite;
+}
+@keyframes breathe {
+  0%, 100% { opacity: 1; transform: translateX(-50%) scale(1); }
+  50%      { opacity: 0.4; transform: translateX(-50%) scale(1.5); }
+}
+
+/* Holiday dot */
+.holidayDot {
+  position: absolute;
+  top: 5px;
+  right: 8px;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--accent-green);
+  z-index: 3;
+}
+.holidayCell { cursor: pointer; }
+
+/* Note indicator dot */
+.noteDot {
+  position: absolute;
+  bottom: 3px;
+  right: 5px;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: #6B8DD6;
+  z-index: 3;
+  animation: noteBlink 3s ease-in-out infinite;
+}
+@keyframes noteBlink {
+  0%, 70%, 100% { opacity: 0.5; }
+  35% { opacity: 1; transform: scale(1.3); }
+}
+
+/* ─── Saved Events — Timeline ─── */
+.savedEvents {
+  margin-top: 18px;
+  padding-top: 14px;
+  border-top: 1px solid var(--divider);
+}
+.savedEventsLabel {
+  display: block;
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: 14px;
+}
+.savedEventsList {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+.savedEventRow {
+  display: flex;
+  align-items: stretch;
+  gap: 10px;
+  position: relative;
+  padding: 6px 0;
+  transition: background var(--duration-fast);
+  border-radius: 6px;
+  margin: 0 -4px;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+.savedEventRow:hover {
+  background: var(--surface-alt);
+}
+.savedEventLine {
+  width: 2px;
+  flex-shrink: 0;
+  background: var(--primary);
+  border-radius: 1px;
+  opacity: 0.5;
+  transition: opacity var(--duration-fast);
+}
+.savedEventRow:hover .savedEventLine {
+  opacity: 1;
+}
+.savedEventContent {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  padding: 2px 0;
+}
+.savedEventDates {
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: var(--primary);
+  letter-spacing: 0.02em;
+  line-height: 1.3;
+}
+.savedEventNote {
+  font-size: 0.78rem;
+  line-height: 1.4;
+  color: var(--text-secondary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.savedEventDelete {
+  width: 22px;
+  height: 22px;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  align-self: center;
+  flex-shrink: 0;
+  opacity: 0;
+  transition: all var(--duration-fast) var(--ease-out);
+}
+.savedEventRow:hover .savedEventDelete {
+  opacity: 1;
+}
+.savedEventDelete:hover {
+  background: rgba(180, 60, 60, 0.12);
+  color: #B43C3C;
+  transform: scale(1.1);
+}
+
+/* ─── Range Selection ─── */
+.rangeStart {
+  background: linear-gradient(to right, transparent 50%, var(--primary-light) 50%) !important;
+}
+.rangeStart .cellNum {
+  background: var(--primary) !important;
+  color: var(--text-inverse) !important;
+  font-weight: 700;
+  box-shadow: 0 3px 12px var(--primary-medium);
+  transform: scale(1);
+}
+.rangeEnd {
+  background: linear-gradient(to left, transparent 50%, var(--primary-light) 50%) !important;
+}
+.rangeEnd .cellNum {
+  background: var(--primary) !important;
+  color: var(--text-inverse) !important;
+  font-weight: 700;
+  box-shadow: 0 3px 12px var(--primary-medium);
+  transform: scale(1);
+}
+.inRange {
+  background: var(--primary-light) !important;
+}
+.inRange .cellNum {
+  color: var(--primary) !important;
+  font-weight: 600;
+}
+.previewEdge .cellNum {
+  background: var(--primary-medium) !important;
+  color: var(--primary) !important;
+}
+
+/* ─── Navigation Bar ─── */
+.navBar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 32px 26px;
+  border-top: 1px solid var(--divider);
+}
+.navBtn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 14px;
+  border-radius: 8px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  letter-spacing: 0.01em;
+  transition: all var(--duration-normal) var(--ease-out);
+}
+.navBtn:hover {
+  background: var(--primary-light);
+  color: var(--primary);
+}
+.navBtn:first-child:hover { transform: translateX(-3px); }
+.navBtn:last-child:hover { transform: translateX(3px); }
+.navBtn:active { transform: scale(0.95); transition-duration: 80ms; }
+.navCenter {
+  position: relative;
+}
+.navMonthBtn {
+  padding: 8px 18px;
+  border-radius: 8px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  background: var(--surface-alt);
+  border: 1.5px solid var(--border);
+  transition: all var(--duration-normal) var(--ease-out);
+}
+.navMonthBtn:hover {
+  border-color: var(--primary);
+  color: var(--primary);
+  box-shadow: var(--shadow-sm);
+}
+
+/* ─── Month Picker ─── */
+.monthPicker {
+  position: absolute;
+  bottom: calc(100% + 14px);
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--surface);
+  border: 1.5px solid var(--border);
+  border-radius: 16px;
+  padding: 18px;
+  box-shadow: 0 16px 48px rgba(44, 37, 32, 0.14);
+  z-index: 100;
+  min-width: 270px;
+  animation: pickerIn 250ms var(--ease-spring);
+}
+@keyframes pickerIn {
+  from { opacity: 0; transform: translateX(-50%) translateY(8px) scale(0.96); }
+  to   { opacity: 1; transform: translateX(-50%) translateY(0) scale(1); }
+}
+.yearNav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+  padding: 0 4px;
+}
+.yearNav span {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: 1.1rem;
+  color: var(--text-primary);
+}
+.yearNav button {
+  width: 30px;
+  height: 30px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-secondary);
+  transition: all var(--duration-fast) var(--ease-out);
+}
+.yearNav button:hover {
+  background: var(--primary-light);
+  color: var(--primary);
+}
+.monthGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 4px;
+}
+.monthOption {
+  padding: 10px 4px;
+  border-radius: 8px;
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  text-align: center;
+  transition: all var(--duration-fast) var(--ease-out);
+}
+.monthOption:hover {
+  background: var(--primary-light);
+  color: var(--primary);
+  transform: scale(1.04);
+}
+.monthActive {
+  background: var(--primary) !important;
+  color: var(--text-inverse) !important;
+  font-weight: 700;
+}
+
+/* ─── Mobile Notes FAB ─── */
+.notesFab {
+  display: none;
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  width: 54px;
+  height: 54px;
+  border-radius: 16px;
+  background: var(--primary);
+  color: white;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 6px 24px var(--primary-medium),
+              0 2px 8px rgba(44, 37, 32, 0.12);
+  z-index: 50;
+  transition: all var(--duration-normal) var(--ease-spring);
+}
+.notesFab:hover {
+  transform: translateY(-3px) scale(1.05);
+  box-shadow: 0 10px 32px var(--primary-medium);
+}
+.notesFab:active {
+  transform: scale(0.92);
+  transition-duration: 80ms;
+}
+
+/* ─── Mobile Bottom Sheet ─── */
+.bottomSheetOverlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(44, 37, 32, 0.45);
+  backdrop-filter: blur(2px);
+  z-index: 200;
+  animation: fadeIn 200ms ease;
+}
+.bottomSheet {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  max-height: 72vh;
+  background: var(--surface);
+  border-radius: 20px 20px 0 0;
+  padding: 8px 24px 36px;
+  overflow-y: auto;
+  animation: sheetUp 350ms var(--ease-spring);
+}
+.bottomSheet .notesCol {
+  padding-right: 0;
+  border-right: none;
+}
+.bottomSheetHandle {
+  width: 40px;
+  height: 4px;
+  border-radius: 2px;
+  background: var(--border);
+  margin: 0 auto 14px;
+}
+.bottomSheetHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 18px;
+}
+.bottomSheetTitle {
+  font-family: var(--font-display);
+  font-size: 1.2rem;
+  font-weight: 400;
+  color: var(--text-primary);
+}
+.bottomSheetClose {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-muted);
+  transition: all var(--duration-fast) var(--ease-out);
+}
+.bottomSheetClose:hover {
+  background: var(--primary-light);
+  color: var(--primary);
+  transform: rotate(90deg);
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+@keyframes sheetUp {
+  from { transform: translateY(100%); }
+  to   { transform: translateY(0); }
+}
+
+/* ═══════════════════════════════════════════════════════
+   Responsive
+   ═══════════════════════════════════════════════════════ */
+
+@media (max-width: 768px) {
+  .page { padding: 0 12px 40px; }
+  .topBar { padding: 16px 0; }
+  .brandName { font-size: 1.2rem; }
+
+  .hero { height: 240px; }
+  .heroMonth { font-size: 1.8rem; }
+  .heroYear { font-size: 0.85rem; }
+  .heroText { bottom: 16px; right: 18px; }
+
+  .body {
+    flex-direction: column;
+    padding: 18px 18px 8px;
+    gap: 0;
+  }
+
+  .desktopNotes { display: none; }
+  .notesFab { display: flex; }
+  .bottomSheetOverlay { display: flex; }
+
+  .gridCol { flex: 1; }
+
+  .spiralRow { gap: 16px; padding: 0 24px; }
+  .spiral::before { width: 13px; height: 24px; }
+
+  .cell { min-height: 44px; }
+  .cellNum { width: 32px; height: 32px; font-size: 0.82rem; }
+
+  .navBar { padding: 12px 18px 22px; }
+  .navBtn span { display: none; }
+
+  .monthPicker { min-width: 230px; padding: 14px; }
+}
+
+@media (max-width: 480px) {
+  .hero { height: 180px; }
+  .heroMonth { font-size: 1.4rem; }
+  .accentTriangle { height: 42%; }
+  .whiteTriangle { height: 32%; }
+
+  .body { padding: 14px 14px 6px; }
+  .cellNum { width: 28px; height: 28px; font-size: 0.78rem; }
+  .weekDay { font-size: 0.62rem; }
+  .cell { min-height: 38px; }
+
+  .spiralRow { gap: 10px; padding: 0 14px; }
+  .spiral::before { width: 11px; height: 20px; border-width: 1.5px; }
+  .spiralInner { width: 8px; height: 10px; border-width: 1.5px; }
+
+  .notesFab {
+    bottom: 16px;
+    right: 16px;
+    width: 48px;
+    height: 48px;
+    border-radius: 14px;
+  }
+}
+
+/* ─── Print ─── */
+@media print {
+  .page { padding: 0; }
+  .topBar, .navBar, .rangeCard, .themeBtn, .todayBtn, .notesFab { display: none; }
+  .calendar { box-shadow: none; border: 1px solid #ccc; }
+  .hero { height: 280px; }
+  .body { padding: 20px; }
+}
